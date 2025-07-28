@@ -1,16 +1,31 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:vmservice_io';
 
+
+  //mostrar atividades
 void main(){
 
   print('Escolha uma atividade:');
-  //mostrar atividades
+  int? option = int.parse(stdin.readLineSync() ?? '0');
 
-  double? numberInuput = double.tryParse(stdin.readLineSync() ?? '0');
+  switch(option){
+    case 1:
+    print('Atividade 1: Calculadora: ');
+    calculator();
+    break;
+    default:
+      print('Escolha um ´numero válido de 1 a ....');
+
+  }
+
+
+
 
 }
 
 void calculator(){
+
 bool isTrue = true;
 
 while(isTrue){
@@ -18,50 +33,38 @@ while(isTrue){
   print('Calculadora informe 2 números: ');
 
   print('Informe o primeiro número! ');
-  double numberInput1 = readNumberAndConvert();
-
-/*
-  int numberInuput = int.parse(stdin.readLineSync() ?? '0');
-*/
-
-  
-
+  double numberOut1 = readNumberInput();
 
   print('Informe o segundo número! ');
-  double numberInput2 = readNumberAndConvert();
+ double numberOut2 = readNumberInput();
   
+
   print('Escolha um operador: | + | - | * | / |');
   String operatorInput = readOperator();
 
-  double result = caculatorResult(numberInput1, numberInput2, operatorInput);
-
-  print('O resultado de ${numberInput1} ${operatorInput} ${numberInput2} é ${result}');
+  double resultCalculator = caculatorResult(numberOut1, numberOut2, operatorInput);
+  print('O resultado de $numberOut1 | $operatorInput | $numberOut2 = $resultCalculator');
+}
 
 }
 
+ double readNumberInput(){
+  double? numberInput = double.tryParse(stdin.readLineSync() ?? '0');
+  if(numberInput != null || numberInput == 0){// arrumar para ser == 0 
+    return numberInput = 0;
+  }
+   return throw new Exception('O número não pode ser nulo!!');
+ }
 
-}
 
-
-double readNumberAndConvert(){
-    stdout.write('Digite o valor: ');
-    String? number = stdin.readLineSync();
-    double numberOut = double.parse(number!);
-    return numberOut;
-}
-
+//Arrumar leitor de opearador, add ??
 String readOperator(){
-  String? operator;
-  try{
-  
+ 
   stdout.write('Digite o operador: ');
-  operator = stdin.readLineSync();
+  String? operator = stdin.readLineSync();
+  if(operator == null){
+    throw new Exception('O operador não pode ser nulo!!');
   }
-  catch(operator){
-    if(operator == null)
-       return 'O valor não pode ser nulo';
-  }
-
 
 String operatorOut = operator.toString();
 return operatorOut;
@@ -70,7 +73,6 @@ return operatorOut;
 
 
 double caculatorResult(double number1, double number2, String operatorInput){
-
 double result = 0; 
 
   switch(operatorInput){
@@ -78,14 +80,19 @@ double result = 0;
     result = number1 + number2; 
     break;
     case '-':
-    result = number1 = number2;
+    result = number1 - number2;
     break;
     case '*':
     result = number1 * number2;
     break;
     case '/':
     result = number1 / number2;
-    break;
+    if(number2 == 0)
+      print('O divisor não pode ser zero!!');
+      calculator();
+    default:
+    throw new Exception('Informe um operador válido!!');
+    
   }
 
 return result;
