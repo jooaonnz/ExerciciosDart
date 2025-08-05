@@ -1,26 +1,34 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:isolate';
 import 'dart:vmservice_io';
 
 
   //mostrar atividades
 void main(){
-
+  print('Atividades em dart ');//listar atividades
   print('Escolha uma atividade:');
   int? option = int.parse(stdin.readLineSync() ?? '0');
 
   switch(option){
     case 1:
-    print('Atividade 1: Calculadora: ');
+    print('Atividade 1: Calculadora ');
     calculator();
     break;
+
+    case 2:
+    print('Atividad 2: Verificar idade maior que 18 anos');
+    yearVerificator();
+    break;
+    
+    case 3:
+    print('Atividade 3: Contagem regressiva');
+    countToZero();
+    break;
+
     default:
       print('Escolha um ´numero válido de 1 a ....');
-
   }
-
-
-
 
 }
 
@@ -50,7 +58,7 @@ while(isTrue){
 
  double readNumberInput(){
   double? numberInput = double.tryParse(stdin.readLineSync() ?? '0');
-  if(numberInput != null || numberInput == 0){// arrumar para ser == 0 
+  if(numberInput != null || numberInput == 0){// arrumar para ser == 0 cls
     return numberInput = 0;
   }
    return throw new Exception('O número não pode ser nulo!!');
@@ -98,3 +106,73 @@ double result = 0;
 return result;
 }
 
+void yearVerificator() {
+
+try{
+  bool isTrue = true;
+
+  print('Para acessar o bar precisamos saber sua idade!');
+
+  while (isTrue) {
+    stdout.write('Informe sua idade: ');
+    int? yearInput = int.parse(stdin.readLineSync() ?? '0');
+
+    if (yearInput! < 18) {
+      print('Acesso negado');
+      isTrue = true;
+    } else {
+      print('Acesso liberado');
+      isTrue = false;
+    }
+  }
+}
+
+on FormatException{
+  print('Insira um valor válido!');
+}
+catch(e){
+  print('Erro inesperado reinicie o sistema!');
+}
+finally{
+  yearVerificator();
+}
+}
+
+
+// para sair digite um número negativo
+void countToZero() async{
+  try{
+
+  bool isTrue = true;
+
+  while(isTrue){
+
+  print('Para sair informe 0 ou número negativo');
+  stdout.write('Informe um número: ');
+  int? number = int.parse(stdin.readLineSync() ?? '0');
+
+  if(number < 1){
+    print('Saindo..');
+    main();
+  } 
+  
+    for(int i = number; i >= 0; i--){  
+      print('Faltam |$i| segundos');
+      await Future.delayed(Duration(seconds: 1));
+    }
+  }
+  }
+  on FormatException{
+    print('Insira um valor válido');
+    countToZero();
+  }
+  catch (e){
+    print('Erro inesperado, reinicie o sistema!!');
+  }
+}
+
+void calculatorAvarege(){
+  print('Matérias: Matemática | Português | Física ');
+
+
+}
