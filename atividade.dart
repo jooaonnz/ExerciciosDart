@@ -25,6 +25,11 @@ void main(){
     print('Atividade 3: Contagem regressiva');
     countToZero();
     break;
+    
+    case 4:
+    print('Atividade 4: Calculadora de Média e Situação do Aluno');
+    calculatorAvarege();
+    break;
 
     default:
       print('Escolha um ´numero válido de 1 a ....');
@@ -171,8 +176,40 @@ void countToZero() async{
   }
 }
 
-void calculatorAvarege(){
-  print('Matérias: Matemática | Português | Física ');
+void calculatorAvarege(){//tratamento de erros
+  
+  print('Informe as notas');
+  
+    print('Matemática');
+    double gradeMath = double.parse(stdin.readLineSync()!);
+    
+    print('Português');
+    double gradePortuguese = double.parse(stdin.readLineSync()!);
+    
+    print('Física');
+    double gradePyshic = double.parse(stdin.readLineSync()!);
+   
+   double result = (gradeMath + gradePortuguese + gradePyshic) / 3;
 
+  switch(result){
+    case > 7:
+    print('Aprovado');
+    break;
+
+    case > 5 && < 6.9:
+    print('Recuperação');
+    break;
+
+    case < 5:
+    print('Reprovado');
+    break;
+
+  }
+
+
+  
+  
+
+  
 
 }
